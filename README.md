@@ -1,6 +1,7 @@
 # PoissonExposureSimulator
 
 The concept is simple. 
+
 Take an image (expected), samples every pixel several times (exposure) and take the average (normalization).
 The more times you sample, the result should be more similar to the image you offer. 
 
