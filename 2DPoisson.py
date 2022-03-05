@@ -112,6 +112,6 @@ exp_time = [10, 33, 100]
 sauce = starSimulator(resolution=360, sigma=5, lightPollution=4)
 
 # use custom file as source
-sauce = readImage("Rosette.jpg")
+# sauce = readImage("Rosette.jpg")
 
 plotColoredImage(exp_time, sauce)
