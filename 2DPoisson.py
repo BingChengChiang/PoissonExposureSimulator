@@ -27,23 +27,18 @@ def starSimulator(resolution=360, sigma=5, lightPollution=4):
 
 def exposureSimulator(rgb_source, integrationTime):
     """
-    input rgb_source of size(3, resolution, resolution), integrationTime(int)
+    input rgb_source of size(resolution, resolution, 3), integrationTime(int)
     returns a RGBchannel image of size (resolution, resolution, 3)
     """
     if not integrationTime:
         rgbChannels = np.array(rgb_source)
 
     else:
-        # transpose to size(channels, resolution, resolution)
-        rgb_source = np.transpose(rgb_source, (2, 0, 1))
-        # size(channels, samples, resolution, resolution)
-        rgbChannels = rgb_source[:, np.newaxis].repeat(integrationTime, axis=1)
-        # start sampling
+        # total signal, equivalent to summing up many exposures
+        rgbChannels = rgb_source * integrationTime
+        # sum after poisson process acts same (on probability) as sum before poisson process
         rgbChannels = np.random.poisson(rgbChannels)
-        # take the average of all samples, result size(channels, resolution, resolution)
-        rgbChannels = rgbChannels.mean(axis=1)
-        # transpose to size(resolution, resolution, channels)
-        rgbChannels = np.transpose(rgbChannels, (1, 2, 0))
+        rgbChannels = rgbChannels / float(integrationTime)
 
     return rgbChannels
 
